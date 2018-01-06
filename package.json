@@ -1,0 +1,28 @@
+{
+  "name": "export-generator",
+  "version": "1.0.0",
+  "description": "Generate simple export files automatically",
+  "main": "dist/src/main/index.js",
+  "types": "dist/src/main/index.d.ts",
+  "scripts": {
+    "test": "ts-node ./src/test/test.ts",
+    "build": "(ts-node ./src/generate/generate-export.ts) && (rm -r ./dist || true) && tsc -d"
+  },
+  "author": "anyhowstep",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnyhowStep/export-generator"
+  },
+  "dependencies": {
+    "@types/glob": "^5.0.34",
+    "@types/node": "^8.5.7",
+    "@types/underscore": "^1.8.6",
+    "glob": "^7.1.2",
+    "typescript": "^2.7.0-dev.20180105",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "ts-node": "^4.1.0"
+  }
+}
