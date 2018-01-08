@@ -4,7 +4,7 @@ const path = require("path");
 const fileUtil = require("./file-util");
 const glob = require("glob");
 const _ = require("underscore");
-function generateNamespacedExport(settings) {
+function buildNamespacedExport(settings) {
     let files = [];
     for (let sourceGlob of settings.sourceGlobs) {
         files.push(...glob.sync(sourceGlob));
@@ -18,7 +18,10 @@ function generateNamespacedExport(settings) {
             continue;
         }
         relative = relative.replace(/(\.[^\.]+)$/, "");
-        const basename = path.basename(relative).replace(/[^a-zA-Z0-9]/g, "_");
+        let basename = path.basename(relative).replace(/[^a-zA-Z0-9]/g, "_");
+        if (/^\d/.test(basename)) {
+            basename = `_${basename}`;
+        }
         basenames.push(basename);
         w.push(`import * as ${basename} from "./${relative}";`);
     }
@@ -27,6 +30,11 @@ function generateNamespacedExport(settings) {
         w.push(`    ${basename},`);
     }
     w.push(`}`);
+    return w;
+}
+exports.buildNamespacedExport = buildNamespacedExport;
+function generateNamespacedExport(settings) {
+    const w = buildNamespacedExport(settings);
     fileUtil.writeSync(`${settings.outputDirectory}/${settings.outputFileName}`, w.join("\n"));
 }
 exports.generateNamespacedExport = generateNamespacedExport;

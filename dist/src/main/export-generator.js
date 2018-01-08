@@ -4,7 +4,7 @@ const path = require("path");
 const fileUtil = require("./file-util");
 const glob = require("glob");
 const _ = require("underscore");
-function generateExport(settings) {
+function buildExport(settings) {
     let files = [];
     for (let sourceGlob of settings.sourceGlobs) {
         files.push(...glob.sync(sourceGlob));
@@ -19,6 +19,11 @@ function generateExport(settings) {
         relative = relative.replace(/(\.[^\.]+)$/, "");
         w.push(`export * from "./${relative}";`);
     }
+    return w;
+}
+exports.buildExport = buildExport;
+function generateExport(settings) {
+    const w = buildExport(settings);
     fileUtil.writeSync(`${settings.outputDirectory}/${settings.outputFileName}`, w.join("\n"));
 }
 exports.generateExport = generateExport;

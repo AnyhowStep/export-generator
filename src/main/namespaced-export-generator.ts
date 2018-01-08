@@ -9,7 +9,7 @@ export interface GenerateNamespacedExportSettings {
     outputFileName : string,
 }
 
-export function generateNamespacedExport (settings : GenerateNamespacedExportSettings) {
+export function buildNamespacedExport (settings : GenerateNamespacedExportSettings) {
     let files : string[] = [];
     for (let sourceGlob of settings.sourceGlobs) {
         files.push(...glob.sync(sourceGlob));
@@ -36,6 +36,10 @@ export function generateNamespacedExport (settings : GenerateNamespacedExportSet
         w.push(`    ${basename},`)
     }
     w.push(`}`);
+    return w;
+}
 
+export function generateNamespacedExport (settings : GenerateNamespacedExportSettings) {
+    const w = buildNamespacedExport(settings);
     fileUtil.writeSync(`${settings.outputDirectory}/${settings.outputFileName}`, w.join("\n"));
 }

@@ -9,7 +9,7 @@ export interface GenerateExportSettings {
     outputFileName : string,
 }
 
-export function generateExport (settings : GenerateExportSettings) {
+export function buildExport (settings : GenerateExportSettings) {
     let files : string[] = [];
     for (let sourceGlob of settings.sourceGlobs) {
         files.push(...glob.sync(sourceGlob));
@@ -25,5 +25,10 @@ export function generateExport (settings : GenerateExportSettings) {
         relative = relative.replace(/(\.[^\.]+)$/, "");
         w.push(`export * from "./${relative}";`);
     }
+    return w;
+}
+
+export function generateExport (settings : GenerateExportSettings) {
+    const w = buildExport(settings);
     fileUtil.writeSync(`${settings.outputDirectory}/${settings.outputFileName}`, w.join("\n"));
 }
