@@ -4,4 +4,4 @@ export interface GenerateExportSettings {
     outputFileName: string;
 }
 export declare function buildExport(settings: GenerateExportSettings): string[];
-export declare function generateExport(settings: GenerateExportSettings): void;
+export declare function generateExport(settings: GenerateExportSettings): boolean;

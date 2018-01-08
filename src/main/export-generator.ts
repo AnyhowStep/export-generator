@@ -30,5 +30,9 @@ export function buildExport (settings : GenerateExportSettings) {
 
 export function generateExport (settings : GenerateExportSettings) {
     const w = buildExport(settings);
+    if (w.length == 0) {
+        return false;
+    }
     fileUtil.writeSync(`${settings.outputDirectory}/${settings.outputFileName}`, w.join("\n"));
+    return true;
 }

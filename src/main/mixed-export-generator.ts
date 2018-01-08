@@ -26,5 +26,9 @@ export function buildMixedExport (settings : GenerateMixedExportSettings) {
 
 export function generateMixedExport (settings : GenerateMixedExportSettings) {
     const w = buildMixedExport(settings);
+    if (w.length == 0) {
+        return false;
+    }
     fileUtil.writeSync(`${settings.outputDirectory}/${settings.outputFileName}`, w.join("\n"));
+    return true;
 }

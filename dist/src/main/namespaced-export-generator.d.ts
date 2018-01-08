@@ -4,4 +4,4 @@ export interface GenerateNamespacedExportSettings {
     outputFileName: string;
 }
 export declare function buildNamespacedExport(settings: GenerateNamespacedExportSettings): string[];
-export declare function generateNamespacedExport(settings: GenerateNamespacedExportSettings): void;
+export declare function generateNamespacedExport(settings: GenerateNamespacedExportSettings): boolean;

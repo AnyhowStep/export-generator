@@ -5,4 +5,4 @@ export interface GenerateMixedExportSettings {
     outputFileName: string;
 }
 export declare function buildMixedExport(settings: GenerateMixedExportSettings): string[];
-export declare function generateMixedExport(settings: GenerateMixedExportSettings): void;
+export declare function generateMixedExport(settings: GenerateMixedExportSettings): boolean;

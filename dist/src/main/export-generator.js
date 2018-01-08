@@ -24,7 +24,11 @@ function buildExport(settings) {
 exports.buildExport = buildExport;
 function generateExport(settings) {
     const w = buildExport(settings);
+    if (w.length == 0) {
+        return false;
+    }
     fileUtil.writeSync(`${settings.outputDirectory}/${settings.outputFileName}`, w.join("\n"));
+    return true;
 }
 exports.generateExport = generateExport;
 //# sourceMappingURL=export-generator.js.map

@@ -25,17 +25,23 @@ function buildNamespacedExport(settings) {
         basenames.push(basename);
         w.push(`import * as ${basename} from "./${relative}";`);
     }
-    w.push(`export {`);
-    for (let basename of basenames) {
-        w.push(`    ${basename},`);
+    if (basenames.length > 0) {
+        w.push(`export {`);
+        for (let basename of basenames) {
+            w.push(`    ${basename},`);
+        }
+        w.push(`}`);
     }
-    w.push(`}`);
     return w;
 }
 exports.buildNamespacedExport = buildNamespacedExport;
 function generateNamespacedExport(settings) {
     const w = buildNamespacedExport(settings);
+    if (w.length == 0) {
+        return false;
+    }
     fileUtil.writeSync(`${settings.outputDirectory}/${settings.outputFileName}`, w.join("\n"));
+    return true;
 }
 exports.generateNamespacedExport = generateNamespacedExport;
 //# sourceMappingURL=namespaced-export-generator.js.map
